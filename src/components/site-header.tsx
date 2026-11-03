@@ -9,8 +9,10 @@ import { cn } from "@/lib/cn";
 
 const links = [
   { href: "/platforms", label: "Platforms" },
-  { href: "/scenarios", label: "Scenarios" },
-  { href: "/sandbox", label: "Sandbox" },
+  { href: "/compare", label: "Compare" },
+  { href: "/businesses", label: "Businesses" },
+  { href: "/tools", label: "Tools" },
+  { href: "/practice", label: "Practise" },
 ];
 
 export function SiteHeader() {

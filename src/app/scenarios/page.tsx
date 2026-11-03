@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Card } from "@/components/ui/card";
+import { PageHero, PageShell } from "@/components/ui/page-shell";
 import { getPlatform } from "@/content/platforms";
 import { scenarios } from "@/content/scenarios";
 
@@ -10,14 +11,12 @@ export const metadata: Metadata = {
 
 export default function ScenariosPage() {
   return (
-    <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
-      <header className="max-w-2xl">
-        <h1 className="text-display text-[var(--text)]">Scenarios</h1>
-        <p className="text-body-lg mt-4">
-          Pick a real task. Write prompts, watch the quality bar, and improve until the prompt
-          earns the platform’s full leverage.
-        </p>
-      </header>
+    <PageShell>
+      <PageHero
+        eyebrow="Real tasks"
+        title="Scenarios"
+        description="Pick a real task. Write prompts, watch the quality bar, and improve until the prompt earns the platform’s full leverage."
+      />
 
       <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {scenarios.map((s) => {
@@ -25,10 +24,14 @@ export default function ScenariosPage() {
           return (
             <li key={s.id}>
               <Card href={`/scenarios/${s.id}`} className="h-full">
-                <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-[var(--text-secondary)]">
-                  <span>{s.category}</span>
-                  <span aria-hidden>·</span>
-                  <span>{platform?.name ?? "Any platform"}</span>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="section-label">{s.category}</span>
+                  <span className="text-xs text-[var(--text-secondary)]" aria-hidden>
+                    ·
+                  </span>
+                  <span className="text-xs font-medium text-[var(--text-secondary)]">
+                    {platform?.name ?? "Any platform"}
+                  </span>
                 </div>
                 <h2 className="mt-2 text-lg font-semibold tracking-[-0.02em] text-[var(--text)]">
                   {s.title}
@@ -41,6 +44,6 @@ export default function ScenariosPage() {
           );
         })}
       </ul>
-    </div>
+    </PageShell>
   );
 }

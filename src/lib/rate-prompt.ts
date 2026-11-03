@@ -37,6 +37,26 @@ const PLATFORM_HINTS: Record<string, string[]> = {
     "Name the Microsoft 365 app and the artifact.",
     "Ask for owners, dates, and decisions when summarizing work.",
   ],
+  kimi: [
+    "Name Agent Swarm, Kimi Code, Claw, or Work when the job needs agents.",
+    "Ask for structured Word/Excel/PPT outputs or long-context synthesis.",
+  ],
+  deepseek: [
+    "Name R1 reasoning, V4 long context, or self-host/MIT when relevant.",
+    "Ask for step-by-step checks and which model class to use (R1 vs distill).",
+  ],
+  glm: [
+    "Name ZCode, AutoGLM, thinking mode, or MCP when the workflow needs them.",
+    "State bilingual needs and whether to self-host under MIT.",
+  ],
+  minimax: [
+    "Name the modality first (video, speech, music, code) and the product (Hailuo, Code, Mavis).",
+    "Specify languages, clone samples, or computer-use needs up front.",
+  ],
+  qwen: [
+    "Name agentic coding, screenshot-to-code, edge/self-host, or unlimited chat.qwen.ai when relevant.",
+    "Ask for iterative write/test/fix loops and clear success criteria.",
+  ],
 };
 
 function clamp(n: number, min = 0, max = 100) {
@@ -129,6 +149,11 @@ export function ratePromptLocal(input: {
       cursor: /\b(agent|mcp|rules?|@[\w./-]+|inline)\b/i,
       perplexity: /\b(cite|citation|sources?|focus|space)\b/i,
       copilot: /\b(outlook|excel|teams|word|powerpoint|meeting)\b/i,
+      kimi: /\b(swarm|claw|kimi code|researcher|mcp|skill)\b/i,
+      deepseek: /\b(r1|v4|distill|self-?host|mit|prover|thinking)\b/i,
+      glm: /\b(zcode|autoglm|thinking|mcp|self-?host|mit|qingyan|chatglm)\b/i,
+      minimax: /\b(hailuo|mavis|voice|clone|music|video|computer use|mcp)\b/i,
+      qwen: /\b(agentic|screenshot|self-?host|apache|flash-?next|tts|omni|edge)\b/i,
     };
     const re = featureWords[platformId];
     platformLeverage = re && re.test(prompt) ? 85 : 35;
