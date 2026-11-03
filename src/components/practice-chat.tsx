@@ -2,9 +2,9 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Send } from "lucide-react";
-import { platforms } from "@/content/platforms";
 import { PromptQualityBar } from "@/components/prompt-quality-bar";
 import { ImproveSheet } from "@/components/improve-sheet";
+import { PlatformSelect } from "@/components/ui/platform-select";
 import type { PromptRating } from "@/lib/rate-prompt";
 import { cn } from "@/lib/cn";
 
@@ -183,21 +183,12 @@ export function PracticeChat({
           )}
 
           {allowPlatformSelect && !lockedPlatformId && (
-            <label className="flex flex-col gap-1.5 text-sm">
-              <span className="font-medium text-[var(--text-secondary)]">Practising for</span>
-              <select
-                value={platformId}
-                onChange={(e) => setPlatformId(e.target.value as string | "any")}
-                className="h-11 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] px-3 text-[var(--text)] shadow-[var(--shadow)]"
-              >
-                <option value="any">Any platform</option>
-                {platforms.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.name}
-                  </option>
-                ))}
-              </select>
-            </label>
+            <PlatformSelect
+              label="Practising for"
+              value={platformId}
+              includeAny
+              onChange={(id) => setPlatformId(id as string | "any")}
+            />
           )}
         </div>
       </div>

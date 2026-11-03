@@ -95,12 +95,17 @@ export function PlatformPicker() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between gap-4">
-        <p className="text-sm text-[var(--text-secondary)]">
-          Question {step + 1} of {pickerQuestions.length}
-        </p>
+      <div>
+        <div className="mb-2 flex items-center justify-between gap-4">
+          <p className="section-label">
+            Question {step + 1} of {pickerQuestions.length}
+          </p>
+          <p className="text-xs tabular-nums text-[var(--text-secondary)]">
+            {Math.round((step / pickerQuestions.length) * 100)}%
+          </p>
+        </div>
         <div
-          className="h-1.5 w-32 overflow-hidden rounded-full bg-[var(--surface-2)]"
+          className="h-1.5 w-full overflow-hidden rounded-full bg-[var(--surface-2)]"
           role="progressbar"
           aria-valuemin={0}
           aria-valuemax={pickerQuestions.length}

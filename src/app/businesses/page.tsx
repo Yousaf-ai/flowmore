@@ -55,13 +55,13 @@ function PlatformChips({ ids }: { ids?: string[] }) {
 
 export default function BusinessesPage() {
   const toc = [
-    { href: "#stats", label: "Key statistics" },
-    { href: "#created", label: "New businesses" },
-    { href: "#improved", label: "Enterprises improved" },
-    { href: "#departments", label: "By department" },
-    { href: "#industries", label: "By industry" },
-    { href: "#combos", label: "Multi-platform combos" },
-    { href: "#new-categories", label: "New categories" },
+    { href: "#created", label: "Part 1 · New businesses" },
+    { href: "#improved", label: "Part 2 · Improved" },
+    { href: "#departments", label: "Departments" },
+    { href: "#industries", label: "Industries" },
+    { href: "#combos", label: "Part 3 · Combos" },
+    { href: "#new-categories", label: "Part 4 · Categories" },
+    { href: "#stats", label: "Part 5 · Stats" },
     { href: "#chinese", label: "Chinese platforms" },
   ];
 
@@ -84,15 +84,21 @@ export default function BusinessesPage() {
         }
       />
 
-      <ChipNav items={toc} label="Report sections" />
+      <div className="mt-10 grid gap-3 sm:grid-cols-3">
+        {keyStats.slice(0, 3).map((s) => (
+          <div
+            key={s.metric}
+            className="rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] px-4 py-4 shadow-[var(--shadow)]"
+          >
+            <p className="section-label">{s.metric}</p>
+            <p className="mt-2 text-sm font-semibold leading-snug tracking-[-0.02em] text-[var(--text)]">
+              {s.figure}
+            </p>
+          </div>
+        ))}
+      </div>
 
-      <Section id="stats">
-        <SectionHeading
-          title="Part 5 — Key statistics"
-          description="Scale signals across enterprise seats, coding, research, shopping, and local discovery."
-        />
-        <StatGrid items={keyStats} />
-      </Section>
+      <ChipNav items={toc} label="Report sections" />
 
       <Section id="created">
         <SectionHeading
@@ -193,6 +199,14 @@ export default function BusinessesPage() {
           rows={newCategories.map((r) => [r.category, r.description, r.platforms])}
           minWidth="40rem"
         />
+      </Section>
+
+      <Section id="stats">
+        <SectionHeading
+          title="Part 5 — Key statistics"
+          description="Scale signals across enterprise seats, coding, research, shopping, and local discovery."
+        />
+        <StatGrid items={keyStats} />
       </Section>
 
       <Section id="chinese">
