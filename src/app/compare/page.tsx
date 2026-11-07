@@ -65,6 +65,18 @@ export default function ComparePage() {
       <div className="compare-inner">
         <header className="home-hero">
           <h1 className="home-title">Compare</h1>
+          <p className="biz-lead">
+            Side-by-side strengths, features, and pricing across all Flowmore platforms—Western
+            and Chinese—so you pick the right tool, then practise taking it further.
+          </p>
+          <div className="home-actions">
+            <Link href="/platforms" className="home-cta home-cta-flat">
+              Browse platforms
+            </Link>
+            <Link href="/sandbox" className="home-cta home-cta-raised">
+              Open sandbox
+            </Link>
+          </div>
         </header>
 
         <nav className="home-chips compare-nav" aria-label="Sections">

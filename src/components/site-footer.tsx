@@ -14,7 +14,10 @@ const links = [
 export function SiteFooter() {
   const pathname = usePathname();
   const onStage =
-    pathname === "/" || pathname === "/platforms" || pathname === "/compare";
+    pathname === "/" ||
+    pathname === "/platforms" ||
+    pathname === "/compare" ||
+    pathname === "/businesses";
 
   return (
     <footer className={cn("site-footer", onStage && "is-home")}>

@@ -19,7 +19,10 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   const onStage =
-    pathname === "/" || pathname === "/platforms" || pathname === "/compare";
+    pathname === "/" ||
+    pathname === "/platforms" ||
+    pathname === "/compare" ||
+    pathname === "/businesses";
 
   return (
     <header
