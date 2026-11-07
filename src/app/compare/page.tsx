@@ -1,16 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { DataTable } from "@/components/ui/data-table";
-import {
-  ChipNav,
-  CtaBand,
-  PageHero,
-  PageShell,
-  Section,
-  SectionHeading,
-} from "@/components/ui/page-shell";
 import {
   chineseFeatureComparison,
   chinesePricingComparison,
@@ -26,134 +15,138 @@ export const metadata: Metadata = {
     "Side-by-side comparison across Western and Chinese AI platforms—features, pricing, and what most users miss.",
 };
 
-export default function ComparePage() {
-  const toc = [
-    { href: "#features", label: "All features" },
-    { href: "#pricing", label: "All pricing" },
-    { href: "#chinese-features", label: "Chinese features" },
-    { href: "#chinese-pricing", label: "Chinese pricing" },
-    { href: "#west-vs-china", label: "West vs China" },
-    { href: "#underused", label: "Underused features" },
-  ];
+const sections = [
+  { href: "#features", label: "All features" },
+  { href: "#pricing", label: "All pricing" },
+  { href: "#chinese-features", label: "Chinese features" },
+  { href: "#chinese-pricing", label: "Chinese pricing" },
+  { href: "#west-vs-china", label: "West vs China" },
+  { href: "#underused", label: "Often missed" },
+];
 
+function CompareTable({
+  headers,
+  rows,
+  minWidth = "48rem",
+}: {
+  headers: string[];
+  rows: string[][];
+  minWidth?: string;
+}) {
   return (
-    <PageShell>
-      <PageHero
-        eyebrow="Side by side"
-        title="Compare platforms"
-        description="Strengths, features, and pricing across all Flowmore platforms—Western and Chinese—so you pick the right tool, then practise taking it further."
-        actions={
-          <>
-            <Button href="/platforms">Browse platforms</Button>
-            <Button href="/sandbox" variant="secondary">
-              Open sandbox
-            </Button>
-          </>
-        }
-      />
-
-      <ChipNav items={toc} />
-
-      <Section id="features">
-        <SectionHeading title="All platforms — features" />
-        <DataTable
-          stickyFirst
-          minWidth="48rem"
-          headers={["Feature", ...featureComparison.columns]}
-          rows={featureComparison.rows.map((r) => [r.feature ?? "", ...r.values])}
-        />
-      </Section>
-
-      <Section id="pricing">
-        <SectionHeading title="All platforms — pricing" />
-        <DataTable
-          stickyFirst
-          minWidth="48rem"
-          headers={["Tier", ...pricingComparison.columns]}
-          rows={pricingComparison.rows.map((r) => [r.tier ?? "", ...r.values])}
-        />
-      </Section>
-
-      <Section id="chinese-features">
-        <SectionHeading
-          title="Chinese platforms — features"
-          description="Kimi, DeepSeek, GLM (Z.ai), MiniMax, and Qwen side by side."
-        />
-        <DataTable
-          stickyFirst
-          minWidth="40rem"
-          headers={["Feature", ...chineseFeatureComparison.columns]}
-          rows={chineseFeatureComparison.rows.map((r) => [r.feature ?? "", ...r.values])}
-        />
-      </Section>
-
-      <Section id="chinese-pricing">
-        <SectionHeading title="Chinese platforms — pricing" />
-        <DataTable
-          stickyFirst
-          minWidth="40rem"
-          headers={["Tier", ...chinesePricingComparison.columns]}
-          rows={chinesePricingComparison.rows.map((r) => [r.tier ?? "", ...r.values])}
-        />
-      </Section>
-
-      <Section id="west-vs-china">
-        <SectionHeading
-          title="Western vs Chinese"
-          description="Where each ecosystem tends to lead—and the practical trade-offs."
-        />
-        <DataTable
-          minWidth="40rem"
-          headers={["Dimension", "Western leaders", "Chinese leaders", "Key difference"]}
-          rows={westVsChina.map((r) => [
-            r.dimension,
-            r.western,
-            r.chinese,
-            r.difference,
-          ])}
-        />
-      </Section>
-
-      <Section id="underused">
-        <SectionHeading
-          title="What most users miss"
-          description="Underused features that unlock each platform."
-        />
-        <ul className="mt-8 grid gap-4 sm:grid-cols-2">
-          {underusedFeatures.map((item) => (
-            <li key={item.platform}>
-              <Card href={item.href} className="h-full">
-                <h3 className="font-semibold tracking-[-0.02em] text-[var(--text)]">
-                  {item.platform}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
-                  {item.items}
-                </p>
-              </Card>
-            </li>
+    <div className="compare-table">
+      <table style={{ minWidth }}>
+        <thead>
+          <tr>
+            {headers.map((header) => (
+              <th key={header} scope="col">
+                {header}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={row[0]}>
+              {row.map((cell, index) => (
+                <td key={`${row[0]}-${index}`}>{cell}</td>
+              ))}
+            </tr>
           ))}
-        </ul>
-      </Section>
+        </tbody>
+      </table>
+    </div>
+  );
+}
 
-      <CtaBand
-        title="Practise next"
-        description="Pick a platform, write a stronger prompt, and watch the quality bar move."
-        actions={
-          <>
-            <Button href="/scenarios">Browse scenarios</Button>
-            <Button href="/sandbox" variant="secondary">
-              Open sandbox
-            </Button>
-          </>
-        }
-      />
-      <p className="mt-6 text-center text-xs text-[var(--text-secondary)]">
-        Looking for a specific stack? Start from{" "}
-        <Link href="/platforms" className="text-[var(--accent)] no-underline hover:underline">
-          platforms
-        </Link>
-        .
-      </p>
-    </PageShell>
+export default function ComparePage() {
+  return (
+    <div className="home compare-page">
+      <div className="compare-inner">
+        <header className="home-hero">
+          <h1 className="home-title">Compare</h1>
+        </header>
+
+        <nav className="home-chips compare-nav" aria-label="Sections">
+          {sections.map((section) => (
+            <a key={section.href} href={section.href} className="home-chip">
+              {section.label}
+            </a>
+          ))}
+        </nav>
+
+        <section id="features" className="compare-section">
+          <h2 className="home-heading">All platforms — features</h2>
+          <CompareTable
+            headers={["Feature", ...featureComparison.columns]}
+            rows={featureComparison.rows.map((row) => [row.feature, ...row.values])}
+          />
+        </section>
+
+        <section id="pricing" className="compare-section">
+          <h2 className="home-heading">All platforms — pricing</h2>
+          <CompareTable
+            headers={["Tier", ...pricingComparison.columns]}
+            rows={pricingComparison.rows.map((row) => [row.tier, ...row.values])}
+          />
+        </section>
+
+        <section id="chinese-features" className="compare-section">
+          <h2 className="home-heading">Chinese platforms — features</h2>
+          <CompareTable
+            minWidth="40rem"
+            headers={["Feature", ...chineseFeatureComparison.columns]}
+            rows={chineseFeatureComparison.rows.map((row) => [row.feature, ...row.values])}
+          />
+        </section>
+
+        <section id="chinese-pricing" className="compare-section">
+          <h2 className="home-heading">Chinese platforms — pricing</h2>
+          <CompareTable
+            minWidth="40rem"
+            headers={["Tier", ...chinesePricingComparison.columns]}
+            rows={chinesePricingComparison.rows.map((row) => [row.tier, ...row.values])}
+          />
+        </section>
+
+        <section id="west-vs-china" className="compare-section">
+          <h2 className="home-heading">Western vs Chinese</h2>
+          <CompareTable
+            minWidth="40rem"
+            headers={["Dimension", "Western leaders", "Chinese leaders", "Key difference"]}
+            rows={westVsChina.map((row) => [
+              row.dimension,
+              row.western,
+              row.chinese,
+              row.difference,
+            ])}
+          />
+        </section>
+
+        <section id="underused" className="compare-section">
+          <h2 className="home-heading">What most users miss</h2>
+          <div className="compare-table">
+            <table style={{ minWidth: "36rem" }}>
+              <thead>
+                <tr>
+                  <th scope="col">Platform</th>
+                  <th scope="col">Often missed</th>
+                </tr>
+              </thead>
+              <tbody>
+                {underusedFeatures.map((item) => (
+                  <tr key={item.href}>
+                    <td>
+                      <Link href={item.href}>{item.platform}</Link>
+                    </td>
+                    <td>{item.items}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
   );
 }

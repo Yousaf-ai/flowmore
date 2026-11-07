@@ -23,8 +23,10 @@ import {
   keyStats,
   newCategories,
   westernCombos,
+  type BusinessExample,
+  type BusinessSection,
 } from "@/content/businesses";
-import { getPlatform } from "@/content/platforms";
+import { getPlatform, platforms } from "@/content/platforms";
 
 export const metadata: Metadata = {
   title: "AI digital businesses — complete report",
@@ -53,12 +55,128 @@ function PlatformChips({ ids }: { ids?: string[] }) {
   );
 }
 
+function ExampleCard({ ex }: { ex: BusinessExample }) {
+  return (
+    <Card className="h-full">
+      <h4 className="font-semibold tracking-[-0.02em] text-[var(--text)]">{ex.title}</h4>
+      <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">{ex.body}</p>
+      <PlatformChips ids={ex.platforms} />
+    </Card>
+  );
+}
+
+/** Themed clusters for Part 1 — keeps every subsection, groups for scannability */
+const createdClusters: { id: string; label: string; sections: string[] }[] = [
+  {
+    id: "software",
+    label: "Software & developer tools",
+    sections: ["micro-saas", "claude-startups", "dev-tools", "api-saas"],
+  },
+  {
+    id: "content-media",
+    label: "Content, media & education",
+    sections: ["content-agencies", "newsletters", "podcast", "education"],
+  },
+  {
+    id: "commerce",
+    label: "Commerce & shopping",
+    sections: ["ecommerce-copy", "shopping"],
+  },
+  {
+    id: "consulting-geo",
+    label: "Consulting, GEO & automation",
+    sections: ["consulting", "geo", "automation"],
+  },
+  {
+    id: "personal-niche",
+    label: "Personal & niche services",
+    sections: ["travel", "weddings", "personal-assistants", "youth"],
+  },
+  {
+    id: "new-platforms",
+    label: "New platform categories",
+    sections: ["comet"],
+  },
+];
+
+function CreatedCluster({
+  cluster,
+}: {
+  cluster: (typeof createdClusters)[number];
+}) {
+  const sections = cluster.sections
+    .map((id) => createdWestern.find((s) => s.id === id))
+    .filter((s): s is BusinessSection => Boolean(s));
+  if (sections.length === 0) return null;
+
+  return (
+    <div>
+      <h3 className="text-lg font-semibold tracking-[-0.02em] text-[var(--text)]">
+        {cluster.label}
+      </h3>
+      <div className="mt-5 space-y-10">
+        {sections.map((section) => (
+          <div key={section.id}>
+            <p className="section-label">{section.heading}</p>
+            {section.intro && (
+              <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--text-secondary)]">
+                {section.intro}
+              </p>
+            )}
+            <ul className="mt-4 grid gap-4 md:grid-cols-2">
+              {section.examples.map((ex) => (
+                <li key={ex.title}>
+                  <ExampleCard ex={ex} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** Part 2 — group enterprise examples by primary platform */
+const improvedGroups = [
+  { id: "copilot", label: "Microsoft Copilot deployments" },
+  { id: "chatgpt", label: "ChatGPT Enterprise" },
+  { id: "claude", label: "Claude" },
+  { id: "cursor", label: "Cursor" },
+  { id: "perplexity", label: "Perplexity" },
+  { id: "gemini", label: "Gemini" },
+] as const;
+
+function ImprovedGroup({ groupId, label }: { groupId: string; label: string }) {
+  const items = improvedEnterprise.filter((ex) => ex.platforms?.[0] === groupId);
+  if (items.length === 0) return null;
+  return (
+    <div>
+      <h3 className="text-lg font-semibold tracking-[-0.02em] text-[var(--text)]">
+        {label}{" "}
+        <span className="ml-1 text-sm font-normal text-[var(--text-secondary)]">
+          · {items.length} {items.length === 1 ? "case" : "cases"}
+        </span>
+      </h3>
+      <ul className="mt-4 grid gap-4 sm:grid-cols-2">
+        {items.map((ex) => (
+          <li key={ex.title}>
+            <ExampleCard ex={ex} />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export default function BusinessesPage() {
+  const glance = keyStats.slice(0, 3);
+
   const toc = [
     { href: "#created", label: "Part 1 · New businesses" },
     { href: "#improved", label: "Part 2 · Improved" },
-    { href: "#departments", label: "Departments" },
-    { href: "#industries", label: "Industries" },
+    { href: "#departments", label: "By department" },
+    { href: "#industries", label: "By industry" },
     { href: "#combos", label: "Part 3 · Combos" },
     { href: "#new-categories", label: "Part 4 · Categories" },
     { href: "#stats", label: "Part 5 · Stats" },
@@ -84,8 +202,9 @@ export default function BusinessesPage() {
         }
       />
 
+      {/* At-a-glance — teaser; full stats live in Part 5 */}
       <div className="mt-10 grid gap-3 sm:grid-cols-3">
-        {keyStats.slice(0, 3).map((s) => (
+        {glance.map((s) => (
           <div
             key={s.metric}
             className="rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] px-4 py-4 shadow-[var(--shadow)]"
@@ -100,60 +219,30 @@ export default function BusinessesPage() {
 
       <ChipNav items={toc} label="Report sections" />
 
+      {/* PART 1 */}
       <Section id="created">
         <SectionHeading
           title="Part 1 — New digital businesses"
-          description="Entirely new products, agencies, and categories powered by Western AI platforms."
+          description="Entirely new products, agencies, and categories powered by Western AI platforms—grouped by theme. Nothing is omitted."
         />
         <div className="mt-10 space-y-14">
-          {createdWestern.map((section) => (
-            <div key={section.id}>
-              <h3 className="text-lg font-semibold tracking-[-0.02em] text-[var(--text)]">
-                {section.heading}
-              </h3>
-              {section.intro && (
-                <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--text-secondary)]">
-                  {section.intro}
-                </p>
-              )}
-              <ul className="mt-5 grid gap-4 md:grid-cols-2">
-                {section.examples.map((ex) => (
-                  <li key={ex.title}>
-                    <Card className="h-full">
-                      <h4 className="font-semibold tracking-[-0.02em] text-[var(--text)]">
-                        {ex.title}
-                      </h4>
-                      <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
-                        {ex.body}
-                      </p>
-                      <PlatformChips ids={ex.platforms} />
-                    </Card>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          {createdClusters.map((cluster) => (
+            <CreatedCluster key={cluster.id} cluster={cluster} />
           ))}
         </div>
       </Section>
 
+      {/* PART 2 */}
       <Section id="improved">
         <SectionHeading
           title="Part 2 — Existing businesses improved"
-          description="Global enterprise deployments and productivity transformations."
+          description="Global enterprise deployments and productivity transformations, grouped by the platform at the core."
         />
-        <ul className="mt-8 grid gap-4 sm:grid-cols-2">
-          {improvedEnterprise.map((ex) => (
-            <li key={ex.title}>
-              <Card className="h-full">
-                <h3 className="font-semibold tracking-[-0.02em] text-[var(--text)]">{ex.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
-                  {ex.body}
-                </p>
-                <PlatformChips ids={ex.platforms} />
-              </Card>
-            </li>
+        <div className="mt-10 space-y-12">
+          {improvedGroups.map((g) => (
+            <ImprovedGroup key={g.id} groupId={g.id} label={g.label} />
           ))}
-        </ul>
+        </div>
       </Section>
 
       <Section id="departments">
@@ -214,6 +303,22 @@ export default function BusinessesPage() {
           title="Chinese AI platforms — created & improved"
           description="Kimi, DeepSeek, GLM (Z.ai), MiniMax, and Qwen power a parallel ecosystem of open-weight, multimodal, and self-hosted businesses."
         />
+
+        <div className="mt-10 flex flex-wrap gap-2">
+          {platforms
+            .filter((p) =>
+              ["kimi", "deepseek", "glm", "minimax", "qwen"].includes(p.id),
+            )
+            .map((p) => (
+              <Link
+                key={p.id}
+                href={`/platforms/${p.id}`}
+                className="rounded-full border border-[var(--border)] bg-[var(--surface-2)] px-3 py-1 text-xs font-medium text-[var(--text)] no-underline transition-colors hover:border-[var(--accent)]/40 hover:text-[var(--accent)]"
+              >
+                {p.name}
+              </Link>
+            ))}
+        </div>
 
         <h3 className="mt-10 text-lg font-semibold tracking-[-0.02em] text-[var(--text)]">
           Businesses built on these platforms

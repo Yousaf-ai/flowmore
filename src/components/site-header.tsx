@@ -12,15 +12,22 @@ const links = [
   { href: "/platforms", label: "Platforms" },
   { href: "/compare", label: "Compare" },
   { href: "/businesses", label: "Businesses" },
-  { href: "/tools", label: "Tools" },
 ];
 
 export function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
+  const onStage =
+    pathname === "/" || pathname === "/platforms" || pathname === "/compare";
+
   return (
-    <header className="sticky top-0 z-40 border-b border-[var(--border)] bg-[var(--bg)]/85 backdrop-blur-xl">
+    <header
+      className={cn(
+        "sticky top-0 z-40 backdrop-blur-xl",
+        onStage ? "home-bar" : "border-b border-[var(--border)] bg-[var(--bg)]/85",
+      )}
+    >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
         <Link
           href="/"
