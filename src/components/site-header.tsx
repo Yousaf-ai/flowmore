@@ -12,7 +12,6 @@ const links = [
   { href: "/platforms", label: "Platforms" },
   { href: "/compare", label: "Compare" },
   { href: "/businesses", label: "Businesses" },
-  { href: "/tools", label: "Tools" },
   { href: "/workflows", label: "Workflows" },
   { href: "/discover", label: "Discover" },
   { href: "/picker", label: "Picker" },
@@ -29,8 +28,7 @@ export function SiteHeader() {
     pathname === "/" ||
     pathname === "/platforms" ||
     pathname === "/compare" ||
-    pathname === "/businesses" ||
-    pathname === "/tools";
+    pathname === "/businesses";
 
   return (
     <header

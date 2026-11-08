@@ -649,7 +649,7 @@ a {
   max-width: 100%;
   overflow-x: auto;
   border-radius: 1.25rem;
-  padding: 0.35rem;
+  padding: 0.5rem;
   background: var(--home-canvas);
   box-shadow:
     inset 6px 6px 14px var(--home-shadow-dark),
@@ -657,26 +657,27 @@ a {
 }
 
 .compare-table table {
-  width: max-content;
-  min-width: 100%;
+  width: 100%;
   border-collapse: separate;
   border-spacing: 0;
   text-align: left;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   border-radius: 1rem;
   overflow: hidden;
+  table-layout: auto;
 }
 
 .compare-table th,
 .compare-table td {
-  min-width: 11rem;
-  max-width: 16rem;
-  padding: 0.85rem 1.1rem;
+  min-width: 10rem;
+  padding: 1.05rem 1.3rem;
   vertical-align: top;
-  line-height: 1.45;
+  line-height: 1.5;
   letter-spacing: -0.011em;
-  border-right: 1px solid color-mix(in srgb, var(--home-ink) 8%, transparent);
-  border-bottom: 1px solid color-mix(in srgb, var(--home-ink) 8%, transparent);
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  border-right: 1px solid color-mix(in srgb, var(--home-ink) 7%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--home-ink) 7%, transparent);
   background: color-mix(in srgb, var(--home-canvas) 92%, transparent);
   color: var(--home-ink);
 }
@@ -684,13 +685,13 @@ a {
 .compare-table thead th {
   font-weight: 600;
   letter-spacing: -0.015em;
-  color: color-mix(in srgb, var(--home-ink) 78%, transparent);
-  background: color-mix(in srgb, var(--home-canvas) 70%, transparent);
+  color: color-mix(in srgb, var(--home-ink) 80%, transparent);
+  background: color-mix(in srgb, var(--home-canvas) 64%, transparent);
   backdrop-filter: blur(8px);
 }
 
 .compare-table tbody tr:hover td {
-  background: color-mix(in srgb, var(--accent) 10%, var(--home-canvas));
+  background: color-mix(in srgb, var(--accent) 9%, var(--home-canvas));
   color: var(--home-ink);
 }
 
@@ -708,10 +709,9 @@ a {
   position: sticky;
   left: 0;
   z-index: 1;
-  min-width: 12rem;
-  max-width: 14rem;
+  min-width: 11rem;
   font-weight: 600;
-  box-shadow: 1px 0 0 color-mix(in srgb, var(--home-ink) 8%, transparent);
+  box-shadow: 1px 0 0 color-mix(in srgb, var(--home-ink) 7%, transparent);
 }
 
 .compare-table thead th:first-child {
