@@ -24,7 +24,6 @@ export function PlatformPicker() {
 
   function choose(optionId: string) {
     const next = [...answers];
-    // replace answer for current step if revisiting
     const q = pickerQuestions[step];
     const without = next.filter((id) => !q.options.some((o) => o.id === id));
     without.push(optionId);
@@ -41,12 +40,12 @@ export function PlatformPicker() {
     const top = ranked[0];
     return (
       <div className="space-y-8">
-        <div className="rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[var(--shadow)]">
-          <p className="text-xs font-medium uppercase tracking-wide text-[var(--accent)]">
-            Your best match
-          </p>
-          <h2 className="mt-2 text-title text-[var(--text)]">{top?.platform?.name}</h2>
-          <p className="mt-2 text-sm text-[var(--text-secondary)]">{top?.platform?.tagline}</p>
+        <div className="fm-panel p-6 sm:p-7">
+          <p className="biz-kicker">Your best match</p>
+          <h2 className="biz-title mt-2" style={{ fontSize: "1.75rem" }}>
+            {top?.platform?.name}
+          </h2>
+          <p className="biz-body mt-2">{top?.platform?.tagline}</p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Button href={`/platforms/${top?.platform?.id}`}>Open platform guide</Button>
             <Button href={`/sandbox?platform=${top?.platform?.id}`} variant="secondary">
@@ -59,24 +58,20 @@ export function PlatformPicker() {
         </div>
 
         <div>
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-[var(--text-secondary)]">
-            Also strong for you
-          </h3>
+          <h3 className="biz-kicker">Also strong for you</h3>
           <ul className="mt-4 grid gap-3 sm:grid-cols-2">
             {ranked.slice(1, 4).map((r) => (
               <li key={r.id}>
-                <Card href={`/platforms/${r.id}`} className="h-full p-4">
-                  <p className="font-semibold tracking-[-0.02em] text-[var(--text)]">
-                    {r.platform?.name}
-                  </p>
-                  <p className="mt-1 text-sm text-[var(--text-secondary)]">{r.platform?.tagline}</p>
+                <Card href={`/platforms/${r.id}`} className="h-full !p-4">
+                  <p className="biz-title">{r.platform?.name}</p>
+                  <p className="biz-body mt-1">{r.platform?.tagline}</p>
                 </Card>
               </li>
             ))}
           </ul>
         </div>
 
-        <p className="text-sm text-[var(--text-secondary)]">
+        <p className="biz-body">
           Next: try a{" "}
           <Link href="/workflows" className="text-[var(--accent)] no-underline hover:underline">
             workflow
@@ -97,7 +92,7 @@ export function PlatformPicker() {
     <div className="space-y-6">
       <div>
         <div className="mb-2 flex items-center justify-between gap-4">
-          <p className="section-label">
+          <p className="biz-kicker">
             Question {step + 1} of {pickerQuestions.length}
           </p>
           <p className="text-xs tabular-nums text-[var(--text-secondary)]">
@@ -105,20 +100,22 @@ export function PlatformPicker() {
           </p>
         </div>
         <div
-          className="h-1.5 w-full overflow-hidden rounded-full bg-[var(--surface-2)]"
+          className="fm-track"
           role="progressbar"
           aria-valuemin={0}
           aria-valuemax={pickerQuestions.length}
           aria-valuenow={step}
         >
           <div
-            className="h-full rounded-full bg-[var(--accent)] transition-[width] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
+            className="fm-track-fill"
             style={{ width: `${(step / pickerQuestions.length) * 100}%` }}
           />
         </div>
       </div>
 
-      <h2 className="text-title text-[var(--text)]">{question.prompt}</h2>
+      <h2 className="biz-title" style={{ fontSize: "1.5rem" }}>
+        {question.prompt}
+      </h2>
 
       <ul className="grid gap-3">
         {question.options.map((opt) => (
@@ -126,10 +123,7 @@ export function PlatformPicker() {
             <button
               type="button"
               onClick={() => choose(opt.id)}
-              className={cn(
-                "w-full rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] px-5 py-4 text-left text-sm font-medium text-[var(--text)] shadow-[var(--shadow)] transition-[transform,border-color,background-color] duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:border-[var(--accent)]/40 hover:bg-[var(--surface-2)] active:scale-[0.99]",
-                selectedForStep === opt.id && "border-[var(--accent)] bg-[var(--accent-muted)]",
-              )}
+              className={cn("fm-option", selectedForStep === opt.id && "is-on")}
             >
               {opt.label}
             </button>

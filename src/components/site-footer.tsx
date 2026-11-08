@@ -19,11 +19,8 @@ const links = [
 
 export function SiteFooter() {
   const pathname = usePathname();
-  const onStage =
-    pathname === "/" ||
-    pathname === "/platforms" ||
-    pathname === "/compare" ||
-    pathname === "/businesses";
+  // Every page now uses the neumorphic "stage" canvas.
+  const onStage = true;
 
   return (
     <footer className={cn("site-footer", onStage && "is-home")}>

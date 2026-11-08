@@ -33,16 +33,16 @@ export default function WorkflowsPage() {
           return (
             <li key={w.id}>
               <Card href={`/workflows/${w.id}`} className="h-full">
-                <p className="section-label">
+                <p className="biz-kicker">
                   {platform?.name ?? w.platformId} · {w.steps.length} steps
                 </p>
-                <h2 className="mt-2 text-lg font-semibold tracking-[-0.02em] text-[var(--text)]">
+                <h2 className="biz-title" style={{ fontSize: "1.15rem" }}>
                   {w.title}
                 </h2>
-                <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
-                  {w.description}
-                </p>
-                <p className="mt-5 text-sm font-medium text-[var(--accent)]">Open workflow →</p>
+                <p className="biz-body">{w.description}</p>
+                <span className="home-card-link" style={{ paddingTop: "0.5rem" }}>
+                  Open workflow →
+                </span>
               </Card>
             </li>
           );

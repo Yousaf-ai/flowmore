@@ -15,11 +15,11 @@ export function ImproveSheet({ open, rating, onClose, onUseImproved }: Props) {
 
   return (
     <div
-      className="mb-3 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)] transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.4,0,0.2,1)]"
+      className="fm-panel mb-3 overflow-hidden"
       role="region"
       aria-label="Improve your prompt"
     >
-      <div className="flex items-start justify-between gap-4 border-b border-[var(--border)] px-4 py-3">
+      <div className="flex items-start justify-between gap-4 px-4 py-3" style={{ borderBottom: "1px solid rgb(255 255 255 / 0.4)" }}>
         <div>
           <h2 className="text-sm font-semibold tracking-[-0.02em] text-[var(--text)]">
             Improve this prompt
@@ -31,7 +31,7 @@ export function ImproveSheet({ open, rating, onClose, onUseImproved }: Props) {
         <button
           type="button"
           onClick={onClose}
-          className="rounded-full px-3 py-1 text-xs font-medium text-[var(--text-secondary)] hover:bg-[var(--surface-2)] hover:text-[var(--text)]"
+          className="fm-btn fm-btn-ghost !min-h-0 !px-3 !py-1 text-xs"
         >
           Close
         </button>
@@ -53,7 +53,7 @@ export function ImproveSheet({ open, rating, onClose, onUseImproved }: Props) {
               ))}
             </ul>
 
-            <div className="rounded-[var(--radius)] bg-[var(--surface-2)] p-3">
+            <div className="fm-well p-3">
               <p className="mb-2 text-xs font-medium uppercase tracking-wide text-[var(--text-secondary)]">
                 Improved prompt
               </p>
@@ -62,11 +62,7 @@ export function ImproveSheet({ open, rating, onClose, onUseImproved }: Props) {
               </pre>
             </div>
 
-            <Button
-              type="button"
-              onClick={() => onUseImproved(rating.improvedPrompt)}
-              className="w-full sm:w-auto"
-            >
+            <Button type="button" onClick={() => onUseImproved(rating.improvedPrompt)}>
               Use improved prompt
             </Button>
           </>

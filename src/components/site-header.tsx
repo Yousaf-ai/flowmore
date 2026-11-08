@@ -24,11 +24,9 @@ export function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
-  const onStage =
-    pathname === "/" ||
-    pathname === "/platforms" ||
-    pathname === "/compare" ||
-    pathname === "/businesses";
+  // Every page now uses the neumorphic "stage" canvas, so the header
+  // always uses the borderless home-bar variant for consistency.
+  const onStage = true;
 
   return (
     <header

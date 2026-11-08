@@ -43,26 +43,23 @@ export default async function WorkflowDetailPage({ params }: Props) {
         }
       />
 
-      <p className="mt-8 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-sm leading-relaxed text-[var(--text)] shadow-[var(--shadow)]">
+      <p className="fm-well home-block px-4 py-3 text-sm leading-relaxed text-[var(--text)]" style={{ marginTop: "2rem" }}>
         <span className="font-medium">Outcome: </span>
         {workflow.outcome}
       </p>
 
-      <ol className="mt-10 space-y-4">
+      <ol className="home-block space-y-4">
         {workflow.steps.map((step, i) => (
-          <li
-            key={`${step.feature}-${i}`}
-            className="rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow)]"
-          >
-            <p className="section-label !text-[var(--accent)]">
+          <li key={`${step.feature}-${i}`} className="biz-glass !p-5">
+            <p className="biz-kicker">
               Step {i + 1} · {step.feature}
             </p>
-            <p className="mt-2 text-sm leading-relaxed text-[var(--text)]">{step.action}</p>
+            <p className="biz-body mt-2">{step.action}</p>
           </li>
         ))}
       </ol>
 
-      <div className="mt-10 flex flex-wrap gap-3">
+      <div className="home-actions">
         <Button href="/workflows" variant="secondary">
           All workflows
         </Button>

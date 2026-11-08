@@ -22,7 +22,7 @@ export function PromptQualityBar({ score, loading, onImprove, improveOpen }: Pro
           : "Needs work";
 
   return (
-    <div className="flex items-center gap-3 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] px-3 py-2 shadow-[var(--shadow)]">
+    <div className="fm-panel flex items-center gap-3 px-3.5 py-2.5">
       <div className="min-w-0 flex-1">
         <div className="mb-1.5 flex items-center justify-between gap-2">
           <span className="text-xs font-medium text-[var(--text-secondary)]">{label}</span>
@@ -31,7 +31,7 @@ export function PromptQualityBar({ score, loading, onImprove, improveOpen }: Pro
           </span>
         </div>
         <div
-          className="h-2 overflow-hidden rounded-full bg-[var(--surface-2)]"
+          className="fm-track"
           role="progressbar"
           aria-valuemin={0}
           aria-valuemax={100}
@@ -39,10 +39,7 @@ export function PromptQualityBar({ score, loading, onImprove, improveOpen }: Pro
           aria-label="Prompt quality score"
         >
           <div
-            className={cn(
-              "h-full rounded-full bg-[var(--accent)] transition-[width] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
-              loading && "opacity-70",
-            )}
+            className={cn("fm-track-fill", loading && "opacity-70")}
             style={{ width: `${value}%` }}
           />
         </div>
@@ -55,8 +52,8 @@ export function PromptQualityBar({ score, loading, onImprove, improveOpen }: Pro
         aria-expanded={improveOpen}
         aria-label="See how to improve your prompt"
         className={cn(
-          "inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface-2)] text-[var(--text)] transition-[transform,background-color,opacity] duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-[var(--accent-muted)] hover:text-[var(--accent)] active:scale-[0.96] disabled:opacity-40",
-          improveOpen && "bg-[var(--accent-muted)] text-[var(--accent)]",
+          "fm-btn fm-btn-secondary inline-flex h-10 w-10 shrink-0 !p-0",
+          improveOpen && "!bg-[var(--accent-muted)] !text-[var(--accent)]",
         )}
       >
         <ArrowUp className="h-4 w-4" aria-hidden />

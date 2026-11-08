@@ -48,24 +48,25 @@ export function FeatureDiscovery() {
     <div className="space-y-8">
       <PlatformChipPicker value={platformId} onChange={selectPlatform} />
 
-      <div className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
-        <div className="h-1 bg-[var(--surface-2)]">
-          <div
-            className="h-full bg-[var(--accent)] transition-[width] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
-            style={{ width: `${progress}%` }}
-          />
+      <div className="fm-panel overflow-hidden">
+        <div className="px-6 pt-5 sm:px-8 sm:pt-7">
+          <div className="fm-track">
+            <div className="fm-track-fill" style={{ width: `${progress}%` }} />
+          </div>
         </div>
         <div className="p-6 sm:p-8">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="section-label !text-[var(--accent)]">
+            <p className="biz-kicker">
               {step?.kind === "miss" ? "Most users miss this" : "Key feature"} · {platform.name}
             </p>
             <p className="text-xs tabular-nums text-[var(--text-secondary)]">
               {index + 1} / {steps.length}
             </p>
           </div>
-          <h2 className="mt-3 text-title text-[var(--text)]">{step?.title}</h2>
-          <p className="mt-4 text-base leading-relaxed text-[var(--text-secondary)]">
+          <h2 className="biz-title mt-3" style={{ fontSize: "1.5rem" }}>
+            {step?.title}
+          </h2>
+          <p className="biz-body mt-4" style={{ fontSize: "1rem", lineHeight: 1.6 }}>
             {step?.body}
           </p>
 
@@ -105,7 +106,9 @@ export function FeatureDiscovery() {
             onClick={() => setIndex(i)}
             className={cn(
               "h-2 rounded-full transition-[width,background-color] duration-200",
-              i === index ? "w-6 bg-[var(--accent)]" : "w-2 bg-[var(--surface-2)] hover:bg-[var(--text-secondary)]",
+              i === index
+                ? "w-6 bg-[var(--accent)]"
+                : "w-2 bg-[var(--surface-2)] hover:bg-[var(--text-secondary)]",
             )}
           />
         ))}

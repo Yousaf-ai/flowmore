@@ -29,7 +29,7 @@ export function PlatformSelect({
         id={id}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="fm-select h-11 w-full max-w-md rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] px-3 text-[var(--text)] shadow-[var(--shadow)]"
+        className="fm-select fm-input h-11 w-full max-w-md px-3.5 text-sm"
       >
         {includeAny && <option value="any">Any platform</option>}
         <optgroup label="Western">
@@ -71,7 +71,7 @@ export function PlatformChipPicker({
         ] as const
       ).map(([label, list]) => (
         <div key={label}>
-          <p className="section-label">{label}</p>
+          <p className="biz-kicker">{label}</p>
           <div className="mt-2 flex flex-wrap gap-2">
             {list.map((p) => {
               const active = p.id === value;
@@ -80,12 +80,7 @@ export function PlatformChipPicker({
                   key={p.id}
                   type="button"
                   onClick={() => onChange(p.id)}
-                  className={cn(
-                    "rounded-full border px-3.5 py-1.5 text-xs font-medium transition-colors duration-200",
-                    active
-                      ? "border-[var(--accent)] bg-[var(--accent-muted)] text-[var(--accent)]"
-                      : "border-[var(--border)] bg-[var(--surface)] text-[var(--text-secondary)] hover:border-[var(--accent)]/40 hover:text-[var(--text)]",
-                  )}
+                  className={cn("fm-chip", active && "is-on")}
                 >
                   {p.name}
                 </button>

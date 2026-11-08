@@ -25,20 +25,18 @@ export default function ScenariosPage() {
             <li key={s.id}>
               <Card href={`/scenarios/${s.id}`} className="h-full">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="section-label">{s.category}</span>
-                  <span className="text-xs text-[var(--text-secondary)]" aria-hidden>
+                  <span className="biz-kicker">{s.category}</span>
+                  <span className="biz-body" aria-hidden style={{ margin: 0 }}>
                     ·
                   </span>
-                  <span className="text-xs font-medium text-[var(--text-secondary)]">
+                  <span className="biz-body" style={{ margin: 0, fontWeight: 500 }}>
                     {platform?.name ?? "Any platform"}
                   </span>
                 </div>
-                <h2 className="mt-2 text-lg font-semibold tracking-[-0.02em] text-[var(--text)]">
+                <h2 className="biz-title" style={{ fontSize: "1.15rem" }}>
                   {s.title}
                 </h2>
-                <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
-                  {s.description}
-                </p>
+                <p className="biz-body">{s.description}</p>
               </Card>
             </li>
           );

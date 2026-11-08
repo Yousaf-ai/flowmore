@@ -10,22 +10,16 @@ export function PageShell({
   narrow?: boolean;
 }) {
   return (
-    <div
-      className={cn(
-        "mx-auto px-4 py-12 sm:px-6 sm:py-16",
-        narrow ? "max-w-3xl" : "max-w-6xl",
-        className,
-      )}
-    >
-      {children}
+    <div className="home">
+      <div className={cn("biz-inner", className)}>
+        {narrow ? <div className="mx-auto w-full max-w-3xl">{children}</div> : children}
+      </div>
     </div>
   );
 }
 
 export function Eyebrow({ children }: { children: React.ReactNode }) {
-  return (
-    <p className="text-sm font-medium tracking-wide text-[var(--accent)]">{children}</p>
-  );
+  return <p className="biz-kicker">{children}</p>;
 }
 
 export function PageHero({
@@ -42,11 +36,13 @@ export function PageHero({
   className?: string;
 }) {
   return (
-    <header className={cn("max-w-3xl", className)}>
-      {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-      <h1 className={cn("text-display text-[var(--text)]", eyebrow && "mt-2")}>{title}</h1>
-      {description && <div className="text-body-lg mt-4">{description}</div>}
-      {actions && <div className="mt-8 flex flex-wrap gap-3">{actions}</div>}
+    <header className={cn("home-hero", className)}>
+      {eyebrow && <p className="biz-kicker">{eyebrow}</p>}
+      <h1 className="home-title" style={{ maxWidth: "20ch" }}>
+        {title}
+      </h1>
+      {description && <p className="biz-lead">{description}</p>}
+      {actions && <div className="home-actions">{actions}</div>}
     </header>
   );
 }
@@ -61,7 +57,7 @@ export function Section({
   className?: string;
 }) {
   return (
-    <section id={id} className={cn("mt-16 scroll-mt-24 sm:mt-20", className)}>
+    <section id={id} className={cn("home-block scroll-mt-24", className)}>
       {children}
     </section>
   );
@@ -78,17 +74,11 @@ export function SectionHeading({
 }) {
   return (
     <div className="max-w-2xl">
-      <Tag
-        className={
-          Tag === "h2"
-            ? "text-title text-[var(--text)]"
-            : "text-lg font-semibold tracking-[-0.02em] text-[var(--text)]"
-        }
-      >
-        {title}
-      </Tag>
+      <Tag className={Tag === "h2" ? "home-heading" : "biz-title"}>{title}</Tag>
       {description && (
-        <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">{description}</p>
+        <p className="biz-lead" style={{ fontSize: "0.95rem", marginTop: "0.6rem" }}>
+          {description}
+        </p>
       )}
     </div>
   );
@@ -104,14 +94,16 @@ export function CtaBand({
   actions?: React.ReactNode;
 }) {
   return (
-    <section className="mt-20 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] px-6 py-10 text-center shadow-[var(--shadow)] sm:px-10">
+    <section className="fm-panel home-block px-6 py-10 text-center sm:px-10">
       <div
         aria-hidden
         className="pointer-events-none mx-auto mb-2 h-px w-24 bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent opacity-60"
       />
-      <h2 className="text-title text-[var(--text)]">{title}</h2>
+      <h2 className="biz-title" style={{ fontSize: "1.5rem" }}>
+        {title}
+      </h2>
       {description && (
-        <p className="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-[var(--text-secondary)]">
+        <p className="biz-lead mx-auto" style={{ marginTop: "0.6rem", maxWidth: "32ch" }}>
           {description}
         </p>
       )}
@@ -128,16 +120,9 @@ export function ChipNav({
   label?: string;
 }) {
   return (
-    <nav
-      aria-label={label}
-      className="mt-10 flex flex-wrap gap-2 border-y border-[var(--border)] py-4"
-    >
+    <nav aria-label={label} className="home-chips home-block">
       {items.map((item) => (
-        <a
-          key={item.href}
-          href={item.href}
-          className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-3.5 py-1.5 text-xs font-medium text-[var(--text-secondary)] no-underline transition-colors hover:border-[var(--accent)]/40 hover:text-[var(--text)]"
-        >
+        <a key={item.href} href={item.href} className="home-chip">
           {item.label}
         </a>
       ))}

@@ -55,13 +55,10 @@ export default function PracticeHubPage() {
               d: "Open tips + an improved rewrite, then resubmit and watch the score move.",
             },
           ].map((s) => (
-            <li
-              key={s.n}
-              className="rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow)]"
-            >
-              <p className="text-xs font-semibold text-[var(--accent)]">Step {s.n}</p>
-              <h3 className="mt-2 font-semibold tracking-[-0.02em] text-[var(--text)]">{s.t}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">{s.d}</p>
+            <li key={s.n} className="biz-glass !p-5">
+              <p className="biz-kicker">Step {s.n}</p>
+              <h3 className="biz-title mt-2">{s.t}</h3>
+              <p className="biz-body mt-2">{s.d}</p>
             </li>
           ))}
         </ol>
@@ -76,12 +73,10 @@ export default function PracticeHubPage() {
               return (
                 <li key={platform.id}>
                   <Card className="h-full">
-                    <h3 className="font-semibold tracking-[-0.02em] text-[var(--text)]">
+                    <h3 className="biz-title" style={{ fontSize: "1.05rem" }}>
                       {platform.name}
                     </h3>
-                    <p className="mt-1 text-sm leading-relaxed text-[var(--text-secondary)]">
-                      {platform.tagline}
-                    </p>
+                    <p className="biz-body mt-1">{platform.tagline}</p>
                     <div className="mt-4 flex flex-wrap gap-2">
                       <Button
                         href={`/sandbox?platform=${platform.id}`}
@@ -127,16 +122,14 @@ export default function PracticeHubPage() {
               return (
                 <li key={s.id}>
                   <Card href={`/scenarios/${s.id}`}>
-                    <p className="section-label">
+                    <p className="biz-kicker">
                       {s.category}
                       {p ? ` · ${p.name}` : " · Any platform"}
                     </p>
-                    <h3 className="mt-2 font-semibold tracking-[-0.02em] text-[var(--text)]">
+                    <h3 className="biz-title mt-2" style={{ fontSize: "1.05rem" }}>
                       {s.title}
                     </h3>
-                    <p className="mt-1 text-sm leading-relaxed text-[var(--text-secondary)]">
-                      {s.description}
-                    </p>
+                    <p className="biz-body mt-1">{s.description}</p>
                   </Card>
                 </li>
               );

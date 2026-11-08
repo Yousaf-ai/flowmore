@@ -29,27 +29,25 @@ export default function PowerUserPage() {
         }
       />
 
-      <ul className="mt-12 grid gap-4">
+      <ul className="home-block grid gap-4">
         {powerUserRules.map((rule) => (
           <li key={rule.id}>
             <Card className="!overflow-hidden !p-0">
               <div className="grid gap-0 md:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)]">
-                <div className="border-b border-[var(--border)] bg-[var(--surface-2)] p-5 md:border-b-0 md:border-r">
-                  <p className="section-label">Situation</p>
-                  <p className="mt-2 font-semibold tracking-[-0.02em] text-[var(--text)]">
+                <div className="fm-well !rounded-none p-5 md:border-b-0" style={{ boxShadow: "none" }}>
+                  <p className="biz-kicker">Situation</p>
+                  <p className="biz-title mt-2" style={{ fontSize: "1.05rem" }}>
                     {rule.situation}
                   </p>
                 </div>
                 <div className="p-5">
-                  <p className="section-label !text-[var(--accent)]">Use</p>
-                  <p className="mt-2 font-semibold tracking-[-0.02em] text-[var(--text)]">
+                  <p className="biz-kicker">Use</p>
+                  <p className="biz-title mt-2" style={{ fontSize: "1.05rem" }}>
                     {rule.use}
                   </p>
-                  <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
-                    {rule.why}
-                  </p>
+                  <p className="biz-body mt-2">{rule.why}</p>
                   {rule.avoid && (
-                    <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">
+                    <p className="biz-body mt-3">
                       <span className="font-medium text-[var(--text)]">Avoid: </span>
                       {rule.avoid}
                     </p>

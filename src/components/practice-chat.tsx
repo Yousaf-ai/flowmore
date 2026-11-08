@@ -164,104 +164,108 @@ export function PracticeChat({
   }
 
   return (
-    <div className="flex min-h-[calc(100dvh-8rem)] flex-col">
-      <div className="border-b border-[var(--border)] bg-[var(--surface)] px-4 py-5 sm:px-6">
-        <div className="mx-auto flex max-w-3xl flex-col gap-3">
-          <div>
-            <p className="text-xs font-medium uppercase tracking-wide text-[var(--accent)]">
-              {mode === "sandbox" ? "Sandbox" : "Scenario"}
-            </p>
-            <h1 className="mt-1 text-title text-[var(--text)]">{title}</h1>
-            {subtitle && <p className="mt-1 text-sm text-[var(--text-secondary)]">{subtitle}</p>}
+    <div className="home">
+      <div className="biz-inner" style={{ paddingTop: "2rem", paddingBottom: "2rem" }}>
+        <div className="flex min-h-[calc(100dvh-8rem)] flex-col">
+          <div className="fm-panel px-5 py-5 sm:px-6">
+            <div className="flex flex-col gap-3">
+              <div>
+                <p className="biz-kicker">{mode === "sandbox" ? "Sandbox" : "Scenario"}</p>
+                <h1 className="biz-title mt-1" style={{ fontSize: "1.6rem" }}>
+                  {title}
+                </h1>
+                {subtitle && <p className="biz-body mt-1">{subtitle}</p>}
+              </div>
+
+              {starterContext && (
+                <div className="fm-well px-4 py-3 text-sm text-[var(--text)]">
+                  <span className="font-medium">Situation: </span>
+                  {starterContext}
+                </div>
+              )}
+
+              {allowPlatformSelect && !lockedPlatformId && (
+                <PlatformSelect
+                  label="Practising for"
+                  value={platformId}
+                  includeAny
+                  onChange={(id) => setPlatformId(id as string | "any")}
+                />
+              )}
+            </div>
           </div>
 
-          {starterContext && (
-            <div className="rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface-2)] px-4 py-3 text-sm text-[var(--text)]">
-              <span className="font-medium">Situation: </span>
-              {starterContext}
-            </div>
-          )}
-
-          {allowPlatformSelect && !lockedPlatformId && (
-            <PlatformSelect
-              label="Practising for"
-              value={platformId}
-              includeAny
-              onChange={(id) => setPlatformId(id as string | "any")}
-            />
-          )}
-        </div>
-      </div>
-
-      <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col px-4 py-6 sm:px-6">
-        <div className="flex-1 space-y-4 pb-4" aria-live="polite">
-          {messages.length === 0 && (
-            <p className="rounded-[var(--radius-lg)] border border-dashed border-[var(--border)] bg-[var(--surface)] px-5 py-8 text-center text-sm text-[var(--text-secondary)]">
-              Write a prompt below. Your quality score appears in the bar above the input — tap ↑ to
-              see how to improve.
-            </p>
-          )}
-          {messages.map((msg) => (
-            <div
-              key={msg.id}
-              className={cn(
-                "max-w-[92%] rounded-[var(--radius-lg)] px-4 py-3 text-sm leading-relaxed shadow-[var(--shadow)]",
-                msg.role === "user"
-                  ? "ml-auto bg-[var(--accent)] text-[var(--accent-fg)]"
-                  : "mr-auto border border-[var(--border)] bg-[var(--surface)] text-[var(--text)]",
+          <div className="mx-auto flex w-full flex-1 flex-col">
+            <div className="flex-1 space-y-4 py-6" aria-live="polite">
+              {messages.length === 0 && (
+                <p className="fm-well px-5 py-8 text-center text-sm text-[var(--text-secondary)]">
+                  Write a prompt below. Your quality score appears in the bar above the input — tap ↑ to
+                  see how to improve.
+                </p>
               )}
-            >
-              <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide opacity-70">
-                {msg.role === "user" ? "You" : "flowmore"}
-              </p>
-              <div className="whitespace-pre-wrap">{msg.content || (sending ? "…" : "")}</div>
+              {messages.map((msg) => (
+                <div
+                  key={msg.id}
+                  className={cn(
+                    "max-w-[92%] rounded-2xl px-4 py-3 text-sm leading-relaxed",
+                    msg.role === "user"
+                      ? "ml-auto bg-[var(--accent)] text-[var(--accent-fg)]"
+                      : "fm-panel mr-auto text-[var(--text)]",
+                  )}
+                >
+                  <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide opacity-70">
+                    {msg.role === "user" ? "You" : "flowmore"}
+                  </p>
+                  <div className="whitespace-pre-wrap">{msg.content || (sending ? "…" : "")}</div>
+                </div>
+              ))}
+              <div ref={bottomRef} />
             </div>
-          ))}
-          <div ref={bottomRef} />
-        </div>
 
-        <div className="sticky bottom-0 space-y-3 bg-[var(--bg)] pb-4 pt-2">
-          <ImproveSheet
-            open={improveOpen}
-            rating={rating}
-            onClose={() => setImproveOpen(false)}
-            onUseImproved={(p) => {
-              setInput(p);
-              setImproveOpen(false);
-              textareaRef.current?.focus();
-            }}
-          />
+            <div className="sticky bottom-0 space-y-3 pb-2 pt-2">
+              <ImproveSheet
+                open={improveOpen}
+                rating={rating}
+                onClose={() => setImproveOpen(false)}
+                onUseImproved={(p) => {
+                  setInput(p);
+                  setImproveOpen(false);
+                  textareaRef.current?.focus();
+                }}
+              />
 
-          <PromptQualityBar
-            score={rating?.score ?? null}
-            loading={ratingLoading}
-            improveOpen={improveOpen}
-            onImprove={() => setImproveOpen((v) => !v)}
-          />
+              <PromptQualityBar
+                score={rating?.score ?? null}
+                loading={ratingLoading}
+                improveOpen={improveOpen}
+                onImprove={() => setImproveOpen((v) => !v)}
+              />
 
-          <div className="flex items-end gap-2 rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] p-2 shadow-[var(--shadow)] focus-within:ring-2 focus-within:ring-[var(--ring)]">
-            <label className="sr-only" htmlFor="practice-input">
-              Your prompt
-            </label>
-            <textarea
-              id="practice-input"
-              ref={textareaRef}
-              rows={2}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={onKeyDown}
-              placeholder="Type your prompt…"
-              className="max-h-40 min-h-[52px] flex-1 resize-y border-0 bg-transparent px-3 py-2.5 text-sm text-[var(--text)] outline-none placeholder:text-[var(--text-secondary)]"
-            />
-            <button
-              type="button"
-              onClick={() => void send()}
-              disabled={sending || !input.trim()}
-              aria-label="Send prompt"
-              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--accent)] text-[var(--accent-fg)] transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:opacity-90 active:scale-[0.96] disabled:opacity-40"
-            >
-              <Send className="h-4 w-4" aria-hidden />
-            </button>
+              <div className="fm-input flex items-end gap-2 p-2">
+                <label className="sr-only" htmlFor="practice-input">
+                  Your prompt
+                </label>
+                <textarea
+                  id="practice-input"
+                  ref={textareaRef}
+                  rows={2}
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={onKeyDown}
+                  placeholder="Type your prompt…"
+                  className="max-h-40 min-h-[52px] flex-1 resize-y border-0 bg-transparent px-3 py-2.5 text-sm text-[var(--text)] outline-none placeholder:text-[var(--text-secondary)]"
+                />
+                <button
+                  type="button"
+                  onClick={() => void send()}
+                  disabled={sending || !input.trim()}
+                  aria-label="Send prompt"
+                  className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--accent)] text-[var(--accent-fg)] transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:opacity-90 active:scale-[0.96] disabled:opacity-40"
+                >
+                  <Send className="h-4 w-4" aria-hidden />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -12,21 +12,12 @@ export function DataTable({
   stickyFirst?: boolean;
 }) {
   return (
-    <div className="mt-6 overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow)]">
-      <table
-        className="w-full border-collapse text-left text-sm"
-        style={{ minWidth }}
-      >
+    <div className="compare-table home-block">
+      <table style={{ minWidth }}>
         <thead>
-          <tr className="border-b border-[var(--border)] bg-[var(--surface-2)]">
+          <tr>
             {headers.map((h, i) => (
-              <th
-                key={h}
-                className={cn(
-                  "px-4 py-3 font-semibold text-[var(--text)]",
-                  stickyFirst && i === 0 && "sticky left-0 z-10 bg-[var(--surface-2)]",
-                )}
-              >
+              <th key={h} scope="col" className={cn(stickyFirst && i === 0 && "is-sticky")}>
                 {h}
               </th>
             ))}
@@ -34,23 +25,9 @@ export function DataTable({
         </thead>
         <tbody>
           {rows.map((row, i) => (
-            <tr
-              key={i}
-              className="border-b border-[var(--border)] transition-colors last:border-0 hover:bg-[var(--surface-2)]/50"
-            >
+            <tr key={i}>
               {row.map((cell, j) => (
-                <td
-                  key={j}
-                  className={cn(
-                    "px-4 py-3 align-top leading-relaxed",
-                    j === 0
-                      ? "font-medium text-[var(--text)]"
-                      : "text-[var(--text-secondary)]",
-                    stickyFirst && j === 0 && "sticky left-0 z-10 bg-[var(--surface)]",
-                  )}
-                >
-                  {cell}
-                </td>
+                <td key={j}>{cell}</td>
               ))}
             </tr>
           ))}
@@ -66,16 +43,11 @@ export function StatGrid({
   items: { metric: string; figure: string }[];
 }) {
   return (
-    <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <ul className="home-block grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((item) => (
-        <li
-          key={item.metric}
-          className="rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--shadow)]"
-        >
-          <p className="text-xs font-medium uppercase tracking-wide text-[var(--text-secondary)]">
-            {item.metric}
-          </p>
-          <p className="mt-2 text-base font-semibold leading-snug tracking-[-0.02em] text-[var(--text)]">
+        <li key={item.metric} className="biz-glass !p-5">
+          <p className="biz-kicker">{item.metric}</p>
+          <p className="biz-title mt-2" style={{ fontSize: "1.05rem" }}>
             {item.figure}
           </p>
         </li>
