@@ -12,6 +12,13 @@ const links = [
   { href: "/platforms", label: "Platforms" },
   { href: "/compare", label: "Compare" },
   { href: "/businesses", label: "Businesses" },
+  { href: "/tools", label: "Tools" },
+  { href: "/workflows", label: "Workflows" },
+  { href: "/discover", label: "Discover" },
+  { href: "/picker", label: "Picker" },
+  { href: "/scenarios", label: "Scenarios" },
+  { href: "/power-user", label: "Power-user" },
+  { href: "/sandbox", label: "Sandbox" },
 ];
 
 export function SiteHeader() {
@@ -22,7 +29,8 @@ export function SiteHeader() {
     pathname === "/" ||
     pathname === "/platforms" ||
     pathname === "/compare" ||
-    pathname === "/businesses";
+    pathname === "/businesses" ||
+    pathname === "/tools";
 
   return (
     <header
@@ -39,7 +47,10 @@ export function SiteHeader() {
           flowmore
         </Link>
 
-        <nav className="hidden items-center gap-0.5 md:flex" aria-label="Primary">
+        <nav
+          className="flex items-center gap-0.5 overflow-x-auto whitespace-nowrap [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden max-w-[42rem] md:flex"
+          aria-label="Primary"
+        >
           {links.map((link) => {
             const active = pathname === link.href || pathname.startsWith(link.href + "/");
             return (

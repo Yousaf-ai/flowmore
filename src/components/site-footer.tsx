@@ -8,7 +8,14 @@ const links = [
   { href: "/platforms", label: "Platforms" },
   { href: "/compare", label: "Compare" },
   { href: "/businesses", label: "Businesses" },
+  { href: "/tools", label: "Tools" },
+  { href: "/workflows", label: "Workflows" },
+  { href: "/discover", label: "Discover" },
+  { href: "/picker", label: "Picker" },
+  { href: "/scenarios", label: "Scenarios" },
+  { href: "/power-user", label: "Power-user" },
   { href: "/practice", label: "Practise" },
+  { href: "/sandbox", label: "Sandbox" },
 ];
 
 export function SiteFooter() {
@@ -17,7 +24,8 @@ export function SiteFooter() {
     pathname === "/" ||
     pathname === "/platforms" ||
     pathname === "/compare" ||
-    pathname === "/businesses";
+    pathname === "/businesses" ||
+    pathname === "/tools";
 
   return (
     <footer className={cn("site-footer", onStage && "is-home")}>

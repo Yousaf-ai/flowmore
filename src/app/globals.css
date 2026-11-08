@@ -648,10 +648,12 @@ a {
 .compare-table {
   max-width: 100%;
   overflow-x: auto;
-  border-radius: 1rem;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  box-shadow: var(--shadow);
+  border-radius: 1.25rem;
+  padding: 0.35rem;
+  background: var(--home-canvas);
+  box-shadow:
+    inset 6px 6px 14px var(--home-shadow-dark),
+    inset -5px -5px 12px var(--home-shadow-light);
 }
 
 .compare-table table {
@@ -661,20 +663,35 @@ a {
   border-spacing: 0;
   text-align: left;
   font-size: 0.875rem;
+  border-radius: 1rem;
+  overflow: hidden;
 }
 
 .compare-table th,
 .compare-table td {
   min-width: 11rem;
   max-width: 16rem;
-  padding: 0.85rem 1rem;
+  padding: 0.85rem 1.1rem;
   vertical-align: top;
   line-height: 1.45;
   letter-spacing: -0.011em;
-  border-right: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
+  border-right: 1px solid color-mix(in srgb, var(--home-ink) 8%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--home-ink) 8%, transparent);
+  background: color-mix(in srgb, var(--home-canvas) 92%, transparent);
+  color: var(--home-ink);
+}
+
+.compare-table thead th {
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: color-mix(in srgb, var(--home-ink) 78%, transparent);
+  background: color-mix(in srgb, var(--home-canvas) 70%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+.compare-table tbody tr:hover td {
+  background: color-mix(in srgb, var(--accent) 10%, var(--home-canvas));
+  color: var(--home-ink);
 }
 
 .compare-table th:last-child,
@@ -682,14 +699,8 @@ a {
   border-right: 0;
 }
 
-.compare-table tr:last-child td {
+.compare-table tbody tr:last-child td {
   border-bottom: 0;
-}
-
-.compare-table th {
-  font-weight: 600;
-  color: var(--text);
-  background: var(--surface-2);
 }
 
 .compare-table th:first-child,
@@ -700,13 +711,11 @@ a {
   min-width: 12rem;
   max-width: 14rem;
   font-weight: 600;
-  background: var(--surface);
-  box-shadow: 1px 0 0 var(--border);
+  box-shadow: 1px 0 0 color-mix(in srgb, var(--home-ink) 8%, transparent);
 }
 
-.compare-table th:first-child {
+.compare-table thead th:first-child {
   z-index: 2;
-  background: var(--surface-2);
 }
 
 .compare-table a {
@@ -715,13 +724,19 @@ a {
   text-decoration: none;
 }
 
-.dark .compare-table th:first-child,
-.dark .compare-table td:first-child {
-  background: var(--surface);
+.compare-table a:hover {
+  text-decoration: underline;
 }
 
-.dark .compare-table th:first-child {
-  background: var(--surface-2);
+.dark .compare-table th,
+.dark .compare-table td {
+  border-color: rgb(255 255 255 / 0.08);
+  background: color-mix(in srgb, var(--surface) 30%, transparent);
+  color: var(--home-ink);
+}
+
+.dark .compare-table thead th {
+  background: color-mix(in srgb, var(--surface) 22%, transparent);
 }
 
 .sr-only {
@@ -992,5 +1007,10 @@ a {
   text-overflow: ellipsis;
   white-space: nowrap;
   color: var(--home-ink);
+}
+
+.site-footer-nav {
+  flex-wrap: wrap;
+  row-gap: 0.4rem;
 }
 
